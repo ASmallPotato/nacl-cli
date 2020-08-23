@@ -29,9 +29,9 @@ func (c *Cmd) SetFlags(f *flag.FlagSet) {
 func (c *Cmd) Execute(ctx context.Context, f *flag.FlagSet, args ...interface{}) subcommands.ExitStatus {
 	commander := subcommands.NewCommander(f, "box")
 
-  commander.Register(&generatekey.Cmd{}, "")
-  commander.Register(&seal.Cmd{}, "")
-  commander.Register(&open.Cmd{}, "")
+	commander.Register(&generatekey.Cmd{}, "")
+	commander.Register(&seal.Cmd{}, "")
+	commander.Register(&open.Cmd{}, "")
 
 	return commander.Execute(ctx, args...)
 }

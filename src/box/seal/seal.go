@@ -32,10 +32,10 @@ func (*Cmd) Usage() string {
 }
 
 func (c *Cmd) SetFlags(f *flag.FlagSet) {
-  f.StringVar(&c.publicKeyFilePath, "public-key", "", "path to public key")
-  f.StringVar(&c.privateKeyFilePath, "private-key", "", "path to private key")
-  f.StringVar(&c.messageFilePath, "file", "-", "path to input file, use - for stdin")
-  f.StringVar(&c.nonceFilePath, "nonce", "", "path of file to read nonce from if provided")
+	f.StringVar(&c.publicKeyFilePath, "public-key", "", "path to public key")
+	f.StringVar(&c.privateKeyFilePath, "private-key", "", "path to private key")
+	f.StringVar(&c.messageFilePath, "file", "-", "path to input file, use - for stdin")
+	f.StringVar(&c.nonceFilePath, "nonce", "", "path of file to read nonce from if provided")
 }
 
 func resolveFileFromPath(path string) (io.Reader, error) {

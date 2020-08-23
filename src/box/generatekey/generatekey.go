@@ -34,9 +34,9 @@ func (*Cmd) Usage() string {
 }
 
 func (c *Cmd) SetFlags(f *flag.FlagSet) {
-  f.StringVar(&c.keyFilePath, "output", "sender", "path to the generated keys")
-  f.StringVar(&c.publicKeyFileSuffix, "suffix", ".pub", "suffix of public key file")
-  f.StringVar(&c.privateKeyFileSuffix, "private-suffix", ".key", "suffix of private key file")
+	f.StringVar(&c.keyFilePath, "output", "sender", "path to the generated keys")
+	f.StringVar(&c.publicKeyFileSuffix, "suffix", ".pub", "suffix of public key file")
+	f.StringVar(&c.privateKeyFileSuffix, "private-suffix", ".key", "suffix of private key file")
 }
 
 func (c *Cmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
