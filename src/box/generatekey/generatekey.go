@@ -22,8 +22,11 @@ type Cmd struct {
 func (*Cmd) Name() string     { return "generatekey" }
 func (*Cmd) Synopsis() string { return "Generate a public key and private key" }
 func (*Cmd) Usage() string {
-	return `box generatekey -name key:
+	return `box generatekey -output=keys/sender:
 	Generate a public key and private key to key.pub and key respectively.
+
+	to output to stdout use extra file descriptor:
+		nacl box generatekey -output=/ -suffix >(base64) -private-suffix >(base64)
 
 	see https://pkg.go.dev/golang.org/x/crypto/nacl/box?tab=doc#GenerateKey
 
@@ -37,6 +40,7 @@ func (c *Cmd) SetFlags(f *flag.FlagSet) {
 }
 
 func (c *Cmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subcommands.ExitStatus {
+	var filePath string
 	publicKey, privateKey, err := box.GenerateKey(rand.Reader)
 
 	if err != nil {
@@ -46,11 +50,13 @@ func (c *Cmd) Execute(_ context.Context, f *flag.FlagSet, _ ...interface{}) subc
 	if dir, _ := filepath.Split(c.keyFilePath); dir != "" {
 		os.MkdirAll(dir, os.ModePerm)
 	}
-	if err := ioutil.WriteFile(c.keyFilePath + c.publicKeyFileSuffix, publicKey[:], 0644); err != nil {
+	filePath = c.keyFilePath + c.publicKeyFileSuffix
+	if err := ioutil.WriteFile(filePath, publicKey[:], 0644); err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err)
 		return subcommands.ExitFailure
 	}
-	if err := ioutil.WriteFile(c.keyFilePath + c.privateKeyFileSuffix, privateKey[:], 0640); err != nil {
+	filePath = c.keyFilePath + c.privateKeyFileSuffix
+	if err := ioutil.WriteFile(filePath, privateKey[:], 0640); err != nil {
 		fmt.Fprintf(os.Stderr, "%s\n", err)
 		return subcommands.ExitFailure
 	}
